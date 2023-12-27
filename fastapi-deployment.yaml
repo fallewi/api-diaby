@@ -1,28 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.31.2 (a92241f79)
-  creationTimestamp: null
   labels:
-    io.kompose.service: fastapi
+    app: fastapi
   name: fastapi
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: fastapi
-  strategy: {}
+      app: fastapi
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
-        kompose.version: 1.31.2 (a92241f79)
-      creationTimestamp: null
       labels:
-        io.kompose.network/ec2-user-network-standard: "true"
-        io.kompose.service: fastapi
+        app: fastapi
     spec:
       containers:
         - image: fastapi-test-local:0.0.1
@@ -31,6 +21,3 @@ spec:
             - containerPort: 5000
               hostPort: 80
               protocol: TCP
-          resources: {}
-      restartPolicy: Always
-status: {}
