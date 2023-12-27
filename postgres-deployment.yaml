@@ -1,29 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.31.2 (a92241f79)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: postgres
   name: postgres
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: postgres
+      app: postgres
   strategy:
     type: Recreate
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
-        kompose.version: 1.31.2 (a92241f79)
-      creationTimestamp: null
       labels:
-        io.kompose.network/ec2-user-network-standard: "true"
-        io.kompose.service: postgres
+        app: postgres
     spec:
       containers:
         - env:
@@ -44,9 +33,7 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-data
-      restartPolicy: Always
       volumes:
         - name: postgres-data
           persistentVolumeClaim:
             claimName: postgres-data
-status: {}
